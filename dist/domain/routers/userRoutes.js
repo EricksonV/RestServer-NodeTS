@@ -29,5 +29,5 @@ const users = __importStar(require("../controllers/usersControllers"));
 exports.router = (0, express_1.Router)();
 exports.router.get('/', users.usersGet);
 exports.router.post('/', users.usersPost);
-exports.router.put('/', users.usersPut);
+exports.router.put('/:id', users.usersPut);
 exports.router.delete('/', users.usersDelete);

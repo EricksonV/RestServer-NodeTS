@@ -33,6 +33,8 @@ class App {
     middlewares() {
         //CORS
         this.app.use((0, cors_1.default)());
+        //Lectura y parseo del body
+        this.app.use(express_1.default.json());
         //Carpeta publica
         this.app.use(express_1.default.static('public'));
     }
