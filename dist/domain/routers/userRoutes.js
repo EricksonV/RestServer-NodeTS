@@ -49,4 +49,8 @@ exports.router.put('/:id', [
     (0, express_validator_1.check)('role').custom(validators.validRole),
     validaCampos_1.validarCampos
 ], users.usersPut);
-exports.router.delete('/', users.usersDelete);
+exports.router.delete('/:id', [
+    (0, express_validator_1.check)('id', 'No es un ID de Mongo').isMongoId(),
+    (0, express_validator_1.check)('id').custom(validators.existUserId),
+    validaCampos_1.validarCampos
+], users.usersDelete);

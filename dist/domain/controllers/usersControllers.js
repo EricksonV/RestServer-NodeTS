@@ -64,9 +64,14 @@ const usersPut = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(201).json({ user });
 });
 exports.usersPut = usersPut;
-const usersDelete = (req, res) => {
+const usersDelete = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    //eliminarlo fisicamente
+    //const user = await User.findByIdAndDelete( id );
+    //actualizar el estado para desactivarlo
+    const user = yield usersSchema_1.default.findByIdAndUpdate(id, { state: false });
     res.status(200).json({
-        msg: 'Delete api - Controller'
+        user
     });
-};
+});
 exports.usersDelete = usersDelete;
