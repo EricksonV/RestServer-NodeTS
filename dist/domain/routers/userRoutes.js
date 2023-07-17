@@ -27,13 +27,13 @@ exports.router = void 0;
 const express_1 = require("express");
 const express_validator_1 = require("express-validator");
 const users = __importStar(require("../controllers/usersControllers"));
-const validaCampos_1 = require("./middlewares/validaCampos");
 const validators = __importStar(require("../helpers/db-validators"));
+const middlewares_1 = require("./middlewares");
 exports.router = (0, express_1.Router)();
 exports.router.get('/', [
     (0, express_validator_1.check)('limit', 'El parametro limite debe ser numerico').optional().isInt(),
     (0, express_validator_1.check)('from', 'El parametro desde debe ser numerico').optional().isInt(),
-    validaCampos_1.validarCampos
+    middlewares_1.validarCampos
 ], users.usersGet);
 exports.router.post('/', [
     (0, express_validator_1.check)('name', 'El nombre es obligatorio').not().isEmpty(),
@@ -41,16 +41,19 @@ exports.router.post('/', [
     (0, express_validator_1.check)('email').isEmail().withMessage('El email no es valido'),
     (0, express_validator_1.check)('email').custom(validators.validEmail),
     (0, express_validator_1.check)('role').custom(validators.validRole),
-    validaCampos_1.validarCampos
+    middlewares_1.validarCampos
 ], users.usersPost);
 exports.router.put('/:id', [
     (0, express_validator_1.check)('id', 'No es un ID de Mongo').isMongoId(),
     (0, express_validator_1.check)('id').custom(validators.existUserId),
     (0, express_validator_1.check)('role').custom(validators.validRole),
-    validaCampos_1.validarCampos
+    middlewares_1.validarCampos
 ], users.usersPut);
 exports.router.delete('/:id', [
+    middlewares_1.validarJWT,
+    //roles.esAdminRole,
+    middlewares_1.roles.tieneRole('ADMIN_ROLE', 'SALES_ROLE'),
     (0, express_validator_1.check)('id', 'No es un ID de Mongo').isMongoId(),
     (0, express_validator_1.check)('id').custom(validators.existUserId),
-    validaCampos_1.validarCampos
+    middlewares_1.validarCampos
 ], users.usersDelete);

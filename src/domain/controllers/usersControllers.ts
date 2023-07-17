@@ -60,6 +60,7 @@ export const usersDelete = async (req:Request, res:Response)=>{
 
     const { id } = req.params;
 
+
     //eliminarlo fisicamente
     //const user = await User.findByIdAndDelete( id );
 

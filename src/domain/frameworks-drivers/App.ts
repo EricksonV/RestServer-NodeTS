@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import {router as userRoutes} from '../routers/userRoutes';
+import {router as pathRoutes} from '../routers/authRoutes';
 import * as dbConnection  from '../../infraestructure/db/configDb';
 dotenv.config();
 
@@ -12,10 +13,12 @@ export class App{
 
     //rutas
     private usuariosPath:string = '';
+    private authPath:string = '';
 
     constructor(){
         //Variables Path
-        this.usuariosPath = '/api/users' 
+        this.usuariosPath = '/api/users';
+        this.authPath = '/api/auth';
 
         //Funciones
 
@@ -47,7 +50,9 @@ export class App{
     }
 
     private routes(): void {
-       this.app.use(this.usuariosPath, userRoutes)
+        this.app.use(this.authPath, pathRoutes);
+       this.app.use(this.usuariosPath, userRoutes);
+       
 
     }
 

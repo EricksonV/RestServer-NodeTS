@@ -40,6 +40,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const userRoutes_1 = require("../routers/userRoutes");
+const authRoutes_1 = require("../routers/authRoutes");
 const dbConnection = __importStar(require("../../infraestructure/db/configDb"));
 dotenv_1.default.config();
 class App {
@@ -47,8 +48,10 @@ class App {
         this.port = process.env.PORT || '8080';
         //rutas
         this.usuariosPath = '';
+        this.authPath = '';
         //Variables Path
         this.usuariosPath = '/api/users';
+        this.authPath = '/api/auth';
         //Funciones
         //express
         this.app = (0, express_1.default)();
@@ -74,6 +77,7 @@ class App {
         this.app.use(express_1.default.static('public'));
     }
     routes() {
+        this.app.use(this.authPath, authRoutes_1.router);
         this.app.use(this.usuariosPath, userRoutes_1.router);
     }
     start() {
